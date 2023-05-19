@@ -5,6 +5,8 @@ namespace Projeto_de_produtos
         public bool Logado;
         public string Usuario { get; set; }
 
+        public string teste;
+
 
         static void BarraCarregamento(string texto, int quantidadePontinhos, int tempo)
         {
@@ -29,7 +31,9 @@ namespace Projeto_de_produtos
             Usuario user = new Usuario();
             user.Cadastrar();
             user.Logar(Logado);
-            Console.WriteLine($"LOGIN EFETUADO!");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"INFORMACOES VALIDAS!");
+            Console.ResetColor();
             BarraCarregamento("ENTRANDO", 6, 400);
             GerarMenu();
         }
@@ -74,30 +78,34 @@ namespace Projeto_de_produtos
 
                         break;
                     case 3:
-                        marca.Cadastrar();
+                        Console.WriteLine($"CADASTRAR MARCA:");
+                        
+                        marca.CadastrarMarca();
                         break;
                     case 4:
                         marca.Listar();
                         break;
                     case 5:
-                        Console.WriteLine($"INFORME O CODIGO DO PRODUTO NA QUAL DESEJA REMOVER:");
-                        int codigo = int.Parse(Console.ReadLine()); Console.WriteLine($"Text");
+                        Console.Write($"INFORME O CODIGO DO PRODUTO NA QUAL DESEJA REMOVER:");
+                        int codigo = int.Parse(Console.ReadLine()); 
                         produto.Deletar(codigo);
-                        
+
                         break;
                     case 6:
-                        Console.WriteLine($"INFORME O CODIGO DA MARCA NA QUAL DESEJA REMOVER:");
+                        Console.Write($"INFORME O CODIGO DA MARCA NA QUAL DESEJA REMOVER:");
                         int codigos = int.Parse(Console.ReadLine());
                         marca.Deletar(codigos);
                         break;
                     case 0:
-                        
+                        Console.ForegroundColor = ConsoleColor.Red;
                         BarraCarregamento("SAINDO DO SISTEMA", 3, 1000);
+                        Console.ResetColor();
                         break;
 
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine($"OPCAO INVALIDA, ESCOLHA UMA OPCAO VALIDA!");
-
+                        Console.ResetColor();
                         break;
                 }
             } while (opcao != 0);

@@ -11,39 +11,84 @@ namespace Projeto_de_produtos
         private string Senha { get; set; }
         private DateTime DataCadastro = DateTime.Now;
 
+
+        static void BarraCarregamento(string texto, int quantidadePontinhos, int tempo)
+        {
+            Console.Write(texto);
+
+            for (var i = 0; i < quantidadePontinhos; i++)
+            {
+                Console.Write($".");
+                Thread.Sleep(tempo);
+            }
+        }
+
+
         public void Cadastrar()
         {
+            BarraCarregamento("ENTRANDO NO SISTEMA", 5, 400);
+            Console.WriteLine($"");
+            Console.WriteLine($"");
+            Console.WriteLine(@$"
+             TELA DE CADASTRO: 
+            ___________________
+            ");
+            Console.WriteLine($"");
             Console.WriteLine($"INFORME O NOME DE USUARIO:");
             this.Nome = Console.ReadLine();
-
-            Console.WriteLine($"INFORME O E-MAIL:");
-            this.Email = Console.ReadLine();
-
+            bool validacao;
+            do
+            {
+                Console.WriteLine($"INFORME O E-MAIL:");
+                this.Email = Console.ReadLine();
+                if (Email.Contains("@"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"EMAIL VALIDO");
+                    Console.ResetColor();
+                    validacao = true;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"EMAIL INVALIDO! O E-MAIL DEVE POSSUIR '@' ");
+                    Console.ResetColor();
+                    validacao = false;
+                }
+            } while (validacao == false);
             Console.WriteLine($"INFORME A SENHA:");
             this.Senha = Console.ReadLine();
 
-            Console.WriteLine($"Informacoes salvas!");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"INFORMACOES SALVAS!");
+            Console.ResetColor();
         }
 
         public void Logar(bool logado)
         {
             do
             {
-            Console.WriteLine($"LOGIN:");
-            Console.WriteLine($"Informe o email cadastrado:");
-            string email = Console.ReadLine();
-            Console.WriteLine($"Informe a senha:");
-            string senha = Console.ReadLine();
-            if (email == Email && senha == Senha)
-            {
-               logado = true;
-               
-            }
-            else
-            {
-                Console.WriteLine($"Email ou senha invalido");
-                
-            }
+
+                Console.WriteLine(@$"
+             TELA DE LOGIN: 
+            ________________
+            ");
+                Console.WriteLine($"INFORME O E-MAIL CADASTRADO::");
+                string email = Console.ReadLine();
+                Console.WriteLine($"INFORME A SENHA:");
+                string senha = Console.ReadLine();
+                if (email == Email && senha == Senha)
+                {
+                    logado = true;
+
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"EMAIL OU SENHA INVALIDO!");
+                    Console.ResetColor();
+
+                }
             } while (logado != true);
         }
         public void Deletar()

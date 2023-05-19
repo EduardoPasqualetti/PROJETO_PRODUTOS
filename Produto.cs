@@ -10,9 +10,7 @@ namespace Projeto_de_produtos
 
         private DateTime DataCadastro;
 
-        public int CodigoMarca { get; set; }
-        public string NomeMarca { get; set; }
-
+        public Marca marca = new Marca();
         public string CadastradoPor { get; set; }
 
         List<Produto> listaProdutos = new List<Produto>();
@@ -20,32 +18,69 @@ namespace Projeto_de_produtos
 
         public void Cadastrar()
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"CADASTRAR PRODUTO:");
+
             Produto novoProduto = new Produto();
 
-            Console.WriteLine($"INFORME O CODIGO DO PRODUTO A CADASTRAR:");
-            novoProduto.Codigo = int.Parse(Console.ReadLine());
+            bool continua = true;
+            do
+            {
+                try
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write($"INFORME O CODIGO DO PRODUTO A CADASTRAR: ");
+                    Console.ResetColor();
+                    novoProduto.Codigo = int.Parse(Console.ReadLine());
+                    continua = true;
+                }
+                catch (System.Exception)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"VOCE NAO DIGITOU UM CODIGO!");
+                    Console.ResetColor();
+                    continua = false;
 
-            Console.WriteLine($"INFORME O NOME DO PRODUTO:");
+                }
+            } while (continua == false);
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"INFORME O NOME DO PRODUTO: ");
+            Console.ResetColor();
             novoProduto.NomeProduto = Console.ReadLine();
+            do
+            {
+                try
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write($"INFORME O PRECO DO PRODUTO: ");
+                    Console.ResetColor();
+                    novoProduto.Preco = float.Parse(Console.ReadLine());
+                    continua = true;
+                }
+                catch (System.Exception)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"VOCE NAO DIGITOU UM VALOR NUMERICO!");
+                    Console.ResetColor();
+                    continua = false;
 
-            Console.WriteLine($"INFORME O PRECO DO PRODUTO:");
-            novoProduto.Preco = float.Parse(Console.ReadLine());
-            
-            Console.WriteLine($"INFORME O CODIGO DA MARCA DESSE PRODUTO:");
-            novoProduto.CodigoMarca = int.Parse(Console.ReadLine());
-
-            Console.WriteLine($"INFORME O NOME DA MARCA:");
-            novoProduto.NomeMarca = Console.ReadLine();
+                }
+            } while (continua == false);
 
 
+            novoProduto.marca = marca.CadastrarMarca();
 
-            Console.WriteLine($"INFORME O NOME DO USUARIO QUE ESTA CADASTRANDO O PRODUTO:");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"INFORME O NOME DO USUARIO QUE ESTA CADASTRANDO O PRODUTO: ");
+            Console.ResetColor();
             novoProduto.CadastradoPor = Console.ReadLine();
+
 
             novoProduto.DataCadastro = DateTime.Now;
 
             listaProdutos.Add(novoProduto);
+
 
 
         }
@@ -53,34 +88,49 @@ namespace Projeto_de_produtos
         {
             if (listaProdutos.Count != 0)
             {
-                    Console.WriteLine($"LISTA DOS PRODUTOS:");
-                    
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"LISTA DOS PRODUTOS:");
+
                 foreach (Produto p in listaProdutos)
                 {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine(@$"
-                    {listaProdutos.IndexOf(p) + 1}- CODIGO: {p.Codigo}, PRODUTO: {p.NomeProduto} 
-                    MARCA: {p.NomeMarca} CODIGO DA MARCA: {p.CodigoMarca}  
-                    PRECO DO PRODUTO: {p.Preco:c} 
+                    {listaProdutos.IndexOf(p) + 1}- 
+                    CODIGO: {p.Codigo}, PRODUTO: {p.NomeProduto} 
+                    PRECO DO PRODUTO: {p.Preco:c}
+                    MARCA: {p.marca.NomeDaMarca} 
                     CADASTRADO POR: {p.CadastradoPor}, NA DATA: {p.DataCadastro}");
+                    Console.ResetColor();
                 }
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine($"A LISTA NAO POSSUI NENHUM PRODUTO CADASTRADO!");
-
+                Console.ResetColor();
             }
         }
         public void Deletar(int codigo)
         {
 
             Produto produtoEncontrado = listaProdutos.Find(x => x.Codigo == codigo);
+            if (listaProdutos.Contains(produtoEncontrado))
+            {
+                listaProdutos.Remove(produtoEncontrado);
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"PRODUTO REMOVIDO COM SUCESSO!");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"A LISTA NAO POSSUI ESSE PRODUTO!");
+                Console.ResetColor();
+            }
 
-            listaProdutos.Remove(produtoEncontrado);
-            Console.WriteLine($"PRODUTO REMOVIDO!");
-            
         }
-    
-}
+
+    }
 
 
 }
