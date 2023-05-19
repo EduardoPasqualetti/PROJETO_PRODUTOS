@@ -56,8 +56,28 @@ namespace Projeto_de_produtos
                     validacao = false;
                 }
             } while (validacao == false);
-            Console.WriteLine($"INFORME A SENHA:");
+
+            do
+            {
+
+            Console.WriteLine($"INFORME A SENHA: (Minimo de 5 e maximo de 12 caracteres.)");
             this.Senha = Console.ReadLine();
+            if (Senha.Length >= 5 && Senha.Length <= 12)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"SENHA VALIDA");
+                Console.ResetColor();
+                validacao = true;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"SENHA INVALIDA, NAO ATENDE AOS REQUISITOS!");
+                Console.ResetColor();
+                validacao = false;
+            }
+            } while (validacao == false);
+
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"INFORMACOES SALVAS!");
